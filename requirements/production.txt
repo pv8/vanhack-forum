@@ -9,3 +9,5 @@ django-anymail==1.2
 
 # postgres driver
 psycopg2==2.7.3.2
+
+whitenoise==3.3.1
