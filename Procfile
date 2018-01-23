@@ -1,0 +1,1 @@
+web: gunicorn vanhack_forum.wsgi:application --log-file -
