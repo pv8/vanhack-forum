@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+{% load gravatar %}
+
+{% block title %}
+  Posts - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active"><a href="{% url 'posts_list' %}">Posts</a></li>
+{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="{% url 'post_create' %}" class="btn btn-primary">New post</a>
+  </div>
+
+  <div class="list-group">
+    {% for post in posts %}
+      <div class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="row">
+          <div class="col-2">
+            <div class="text-center">
+              <img src="{{ post.author.email|gravatar }}" alt="{{ post.author.username }}" class="w-50 rounded-circle"> <br/>
+              <small><strong>{{ post.author.username }}</strong></small>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="list-group-item-heading"><a href="{% url 'post_read' post.pk %}">{{ post.subject }}</a></h5>
+              <small>
+                {%  if post.updated_at %}
+                Last updated: <a href="#" style="text-decorations:none; color:inherit;" data-toggle="tooltip" data-placement="top" title="{{ post.updated_at }}">{{ post.updated_at|timesince }}</a> ago
+                {%  else %}
+                Published: {{ post.published_at }}
+                {% endif %}
+              </small>
+            </div>
+            <p class="mb-1">{{ post.detail_markdown|truncatechars:250 }}</p>
+            <div class="d-flex w-100 justify-content-between">
+              <span class="list-group-item-heading">
+                <span class="badge badge-pill badge-secondary"><span class="oi oi-chat" title="icon name" aria-hidden="true"></span>  {{ post.comments_count }}</span>
+              </span>
+              <div>
+              {% for category in post.categories.all %}
+               <span class="badge badge-pill badge-info"><a href="{% url 'posts_list' %}?c={{ category.id }}" style="text-decorations:none; color:inherit;">{{ category.name }}</a> </span>
+              {%  endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+{% endblock %}

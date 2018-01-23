@@ -1,0 +1,26 @@
+{% with form=modal_form %}
+{% endwith %}
+
+<!-- Modal -->
+<div class="modal fade" id="categoryEdit" tabindex="-1" role="dialog" aria-labelledby="categoryEditLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categoryEditLabel">New category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form method="post" class="mb-4" data-target="#categoryEdit" action="{% url 'category_create' %}" method="POST" data-async novalidate>
+          {% csrf_token %}
+          {% include 'includes/form.html' %}
+          <button type="submit" class="btn btn-success">Submit</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>

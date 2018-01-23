@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% load gravatar %}
+
+{% block title %}Profile{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Profile</li>
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-2">
+      <img src="{{ user.email|gravatar }}" alt="{{ user.username }}" class="w-50 rounded-circle">
+    </div>
+    <div class="col-4">
+      <a href="{% url 'password_change' %}" class="btn btn-primary">Change password</a>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {% include 'includes/form.html' %}
+        <button type="submit" class="btn btn-success">Save changes</button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

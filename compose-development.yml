@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/development/web/Dockerfile
+    volumes:
+      - .:/app
+      - ~/.pdbrc.py:/root/.pdbrc.py  # if it exists, use it!
+    environment:
+      - USE_DOCKER=yes
+      - DATABASE_URL=sqlite:///db.sqlite3
+      - DJANGO_SETTINGS_MODULE=settings.development
+    ports:
+      - "8000:8000"
+    command: runserver_plus 0.0.0.0:8000
+
+volumes:
+  postgres_data_local:
+  postgres_backup_local:

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Comment{% endblock %}
+
+{% block stylesheet %}
+{% endblock %}
+
+{% block javascript %}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'categories_list' %}">Categories</a></li>
+  <li class="breadcrumb-item active">
+    {% if form.instance.pk %}
+      Edit category
+    {% else %}
+      New category
+    {% endif %}
+  </li>
+{% endblock %}
+
+{% block content %}
+  <form method="post" class="mb-4" novalidate>
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+    <button type="submit" class="btn btn-success">Submit</button>
+    <a href="{% url 'categories_list' %}" class="btn btn-secondary" role="button">Cancel</a>
+  </form>
+{% endblock %}

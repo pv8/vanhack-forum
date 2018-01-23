@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Comment{% endblock %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'js/simplemde.min.js' %}"></script>
+  <script>
+    var simplemde = new SimpleMDE({
+      element: document.getElementById("id_message"),
+      spellChecker: false,
+      status: ["lines", "words", {
+        className: "chars",
+        defaultValue: function(elem) {
+          this.maxLength = {{ form.message.field.max_length }};
+          elem.innerHTML = "0/" + this.maxLength;
+        },
+        onUpdate: function(elem) {
+          var field_length = simplemde.value().length;
+          elem.innerHTML = field_length + "/" + this.maxLength;
+          if (field_length > this.maxLength && elem.className.indexOf("text-danger") == -1) {
+            elem.className += " text-danger";
+          } else if (field_length <= this.maxLength && elem.className.indexOf("text-danger") > -1) {
+            elem.className = elem.className.replace("text-danger", "");
+          }
+        }
+      }]
+    });
+  </script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'posts_list' %}">Posts</a></li>
+  <li class="breadcrumb-item"><a href="{% url 'post_read' post.pk %}">{{ post.subject }}</a></li>
+  <li class="breadcrumb-item active">
+    {% if form.instance.pk %}
+      Edit comment
+    {% else %}
+      New comment
+    {% endif %}
+  </li>
+{% endblock %}
+
+{% block content %}
+  <form method="post" class="mb-4" novalidate>
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+    <button type="submit" class="btn btn-success">Submit</button>
+    <a href="{% url 'post_read' post.pk %}" class="btn btn-secondary" role="button">Cancel</a>
+  </form>
+{% endblock %}

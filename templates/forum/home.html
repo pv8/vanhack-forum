@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Boards</li>
+{% endblock %}
+
+{% block content %}
+<div class="list-group">
+  {% for topic in topic_list %}
+  <div class="list-group-item list-group-item-action flex-column align-items-start">
+    <div class="d-flex w-100 justify-content-between">
+      <h5 class="list-group-item-heading"><a href="{% url 'board_topics' board.id %}">{{ board.name }}</a></h5>
+      <small><a href="#" data-toggle="tooltip" data-placement="top" title="{{ topic.pub_date }}">{{ topic.pub_date|timesince }} ago</a></small>
+    </div>
+    <p class="mb-1">{{ topic.content }}</p>
+    <div class="d-flex w-100 justify-content-between">
+      <small class="list-group-item-heading">
+          <a href=""><span class="oi oi-thumb-up" title="icon name" aria-hidden="true"></span></a> <span class="badge badge-pill">{{ topic.likes_count }}</span>
+          <span class="oi oi-chat" title="icon name" aria-hidden="true"></span> <span class="badge badge-pill">{{ topic.comment_count }}</span>    
+      </small>
+      <small><span class="oi oi-person"></span> {{ topic.user.name }}</small>
+    </div>  
+  </div>
+  {% endfor %}
+</div>
+
+<table class="table">
+    <thead class="thead-inverse">
+      <tr>
+        <th>Board</th>
+        <th>Posts</th>
+        <th>Topics</th>
+        <th>Last Post</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for board in boards %}
+        <tr>
+          <td>
+            <a href="{% url 'board_topics' board.pk %}">{{ board.name }}</a>
+            <small class="text-muted d-block">{{ board.description }}</small>
+          </td>
+          <td class="align-middle">
+            {{ board.get_posts_count }}
+          </td>
+          <td class="align-middle">
+            {{ board.topics.count }}
+          </td>
+          <td class="align-middle">
+            {% with post=board.get_last_post %}
+              {% if post %}
+                <small>
+                  <a href="{% url 'post_read' board.pk post.topic.pk %}">
+                    By {{ post.created_by.username }} {{ post.created_at|naturaltime }}
+                  </a>
+                </small>
+              {% else %}
+                <small class="text-muted">
+                  <em>No posts yet.</em>
+                </small>
+              {% endif %}
+            {% endwith %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% load humanize %}
+
+{% block title %}
+  Categories - {{ block.super }}
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item active">Categories</li>
+{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="{% url 'category_create' %}" class="btn btn-primary">New category</a>
+  </div>
+
+  <div>
+    {% if categories %}
+      <div class="col-12">
+        <table class="table table-hover table-sm">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col"># posts</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {% for category in categories %}
+            <tr>
+              <td><span class="badge badge-pill badge-info">{{ category.name }}</span></td>
+              <td><a href="#" data-toggle="tooltip" style="text-decorations:none; color:inherit;" data-placement="top" title="{{ category.description }}">{{ category.description|truncatechars:50 }}</a></td>
+              <th scope="row"><a href="{% url 'posts_list' %}?c={{ category.id }}">{{ category.post_set.count }}</a></th>
+              <td>
+                <a class="btn btn-sm btn-outline-primary" href="{% url 'category_update' category.id %}" role="button" alt="Edit"><span class="oi oi-pencil"></span></a>
+                &nbsp;
+                <a class="btn btn-sm btn-outline-danger" href="{% url 'category_delete' category.id %}" role="button" alt="Delete"><span class="oi oi-x"></span></a>
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

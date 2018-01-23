@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% load gravatar %}
+
+{% block title %}{{ post.subject }}{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'posts_list' %}">Posts</a></li>
+  <li class="breadcrumb-item active">{{ post.subject }}</li>
+{% endblock %}
+
+{% block content %}
+  <div class="card mb-4 border-dark">
+    <div class="card-header text-light bg-dark py-2 px-3 text-right"><small><strong>Published:</strong> {{ post.published_at }}</small></div>
+      <div class="card-body p-3">
+        <div class="row">
+          <div class="col-2 text-center">
+            <img src="{{ post.author.email|gravatar }}" alt="{{ post.author.username }}" class="w-75 rounded-circle">
+            <br/>
+            <small><strong>{{ post.author.username }}</strong></small>
+          </div>
+          <div class="col-10">
+            <div class="post-body">
+              {{ post.detail_markdown }}
+            </div>
+          </div>
+        </div>
+      </div>
+    <div class="card-footer text-muted">
+        <div class="row mb-3">
+            <div class="col-6">
+              {% if post.author == user %}
+              <div class="mt-3">
+                <a href="{% url 'post_update' post.pk %}"
+                   class="btn btn-outline-primary btn-sm"
+                   role="button">Edit</a>
+                {% if comments %}
+                <a href="#" onClick="return false;"
+                   class="btn btn-outline-secondary btn-sm"
+                   data-toggle="tooltip" data-placement="top" title="Can't delete a post with comments"
+                   aria-disabled="true"
+                   role="button">Delete</a>
+                {%  else %}
+                <a href="{% url 'post_delete' post.pk %}"
+                   class="btn btn-outline-danger btn-sm"
+                   role="button">Delete</a>
+                {% endif %}
+              </div>
+              {% endif %}
+            </div>
+            <div class="col-6 text-right">
+              {% for category in post.categories.all %}
+              <span class="badge badge-pill badge-info"><a href="{% url 'posts_list' %}?c={{ category.id }}" style="text-decorations:none; color:inherit;">{{ category.name }}</a></span>
+              {%  endfor %}
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="mb-4">
+    <a href="{% url 'comment_create' post.pk %}" class="btn btn-primary" role="button">New comment</a>
+  </div>
+
+  {% for comment in comments %}
+    <div id="comment_{{ comment.pk }}" class="card {% if forloop.last %}mb-4{% else %}mb-2{% endif %}">
+      <div class="card-body p-3">
+        <div class="row">
+          <div class="col-2 text-center">
+            <img src="{{ comment.author.email|gravatar }}" alt="{{ comment.created_by.username }}" class="w-50 rounded-circle">
+            <br/>
+            <small class="text-muted">{{ comment.author.username }}</small>
+          </div>
+          <div class="col-10">
+            <div class="row mb-3">
+              <div class="col-12 text-right">
+                <small class="text-muted">{{ comment.published_at }}</small>
+              </div>
+            </div>
+            <div class="post-body">
+              {{ comment.message_markdown }}
+            </div>
+            {% if comment.author == user %}
+              <div class="mt-3">
+                <a href="{% url 'comment_update' post.pk comment.pk %}"
+                   class="btn btn-outline-primary btn-sm"
+                   role="button">Edit</a>
+                <a href="{% url 'comment_delete' post.pk comment.pk %}"
+                   class="btn btn-outline-danger btn-sm"
+                   role="button">Delete</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock %}

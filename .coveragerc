@@ -1,0 +1,11 @@
+[run]
+source =
+    vanhack_forum
+    account
+    forum
+omit =
+    */tests*
+    */migrations/*
+    */runner.py
+    */wsgi.py
+    manage.py

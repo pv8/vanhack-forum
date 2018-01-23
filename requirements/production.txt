@@ -1,0 +1,11 @@
+-r base.txt
+
+# WSGI Handler
+gevent==1.2.2
+gunicorn==19.7.1
+
+# Email
+django-anymail==1.2
+
+# postgres driver
+psycopg2==2.7.3.2

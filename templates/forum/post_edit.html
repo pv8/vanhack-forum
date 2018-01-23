@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Start a New Topic{% endblock %}
+
+{% block stylesheet %}
+  <link rel="stylesheet" href="{% static 'css/simplemde.min.css' %}">
+{% endblock %}
+
+{% block javascript %}
+  <script src="{% static 'js/simplemde.min.js' %}"></script>
+  <script>
+    var simplemde = new SimpleMDE({
+      element: document.getElementById("id_detail"),
+      spellChecker: false,
+      status: ["lines", "words", {
+        className: "chars",
+        defaultValue: function(elem) {
+          this.maxLength = {{ form.detail.field.max_length }};
+          elem.innerHTML = "0/" + this.maxLength;
+        },
+        onUpdate: function(elem) {
+          var field_length = simplemde.value().length;
+          elem.innerHTML = field_length + "/" + this.maxLength;
+          if (field_length > this.maxLength && elem.className.indexOf("text-danger") == -1) {
+            elem.className += " text-danger";
+          } else if (field_length <= this.maxLength && elem.className.indexOf("text-danger") > -1) {
+            elem.className = elem.className.replace("text-danger", "");
+          }
+        }
+      }]
+    });
+    jQuery(function($) {
+      $('form[data-async]').on('submit', function(event) {
+        var $form = $(this);
+        var $target = $($form.attr('data-target'));
+        jQuery.ajax({
+          type: $form.attr('method'),
+          url: $form.attr('action'),
+          data: $form.serialize(),
+          success: function(data, status) {
+            $target.html(data);
+          }
+        }).success(function(a, b, c) {
+          console.log(a);
+        });
+
+          event.preventDefault();
+        });
+    });
+</script>
+{% endblock %}
+
+{% block breadcrumb %}
+  <li class="breadcrumb-item"><a href="{% url 'posts_list' %}">Posts</a></li>
+  {% if form.instance.pk %}
+    <li class="breadcrumb-item"><a href="{% url 'post_read' form.instance.pk %}">{{ form.instance.subject }}</a></li>
+    <li class="breadcrumb-item active">Edit post</li>
+  {% else %}
+    <li class="breadcrumb-item active">New post</li>
+  {% endif %}
+{% endblock %}
+{% block content %}
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {% include 'includes/form.html' %}
+{#    <div class="form-group">#}
+{#      <small class="text-muted">Didn't find a category?</small>#}
+{#      <button type="button" class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#categoryEdit">Create a new category</button>#}
+{#    </div>#}
+    <button type="submit" class="btn btn-success">Submit</button>
+    <a href="{% url 'posts_list' %}" class="btn btn-secondary" role="button">Cancel</a>
+  </form>
+{% include 'forum/category_edit_modal.html' with form=modal_form %}
+{% endblock %}

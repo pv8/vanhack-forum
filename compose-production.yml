@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/production/web/Dockerfile
+    depends_on:
+      - db
+    env_file: .env
+    command: /bin/start.sh
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/production/db/Dockerfile
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - postgres_backup:/backups
+    env_file: .env
+    restart: always
+
+volumes:
+  postgres_data:
+  postgres_backup:
+
