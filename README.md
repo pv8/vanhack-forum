@@ -24,7 +24,7 @@ Clone the repository to your local machine:
 $ git clone git@github.com:pv8/vanhack-forum.git
 ```
 
-Create the database (by running ]Django migrations](https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-migrate)):
+Create the database by running [Django migrations](https://docs.djangoproject.com/en/1.11/ref/django-admin/#django-admin-migrate)):
 
 ```bash
 $ docker-compose -f compose-development.yml run web migrate
