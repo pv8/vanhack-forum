@@ -1,1 +1,1 @@
-web: gunicorn vanhack_forum.wsgi:application --log-file -
+web: sqreen-start gunicorn vanhack_forum.wsgi:application --log-file -
