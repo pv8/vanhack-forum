@@ -2,7 +2,7 @@
 
 # WSGI Handler
 gevent==1.2.2
-gunicorn==19.7.1
+gunicorn==19.9.0
 
 # Email
 django-anymail==1.2.1
