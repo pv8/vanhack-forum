@@ -5,7 +5,7 @@ gevent==1.2.2
 gunicorn==19.9.0
 
 # Email
-django-anymail==1.2.1
+django-anymail==6.0.1
 
 # postgres driver
 psycopg2==2.7.3.2
