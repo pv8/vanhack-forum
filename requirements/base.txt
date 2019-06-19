@@ -4,4 +4,4 @@ django-tags-input==4.0.0
 dj-database-url==0.5.0
 Markdown==2.6.11
 python-decouple==3.1
-Werkzeug==0.14.1
+Werkzeug==0.15.4
