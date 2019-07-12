@@ -2,7 +2,7 @@
 
 ipdb==0.12
 pdbpp==0.10.0
-ipython==6.2.1
+ipython==7.6.1
 
 django-coverage-plugin==1.5.0
 django-extensions==2.1.9
