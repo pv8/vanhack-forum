@@ -6,7 +6,7 @@ ipython==6.2.1
 
 django-coverage-plugin==1.5.0
 django-extensions==2.1.9
-django-debug-toolbar==1.11
+django-debug-toolbar==2.0
 
 coverage==4.5.3
 flake8==3.7.8
