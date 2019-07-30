@@ -8,7 +8,7 @@ django-coverage-plugin==1.6.0
 django-extensions==2.2.1
 django-debug-toolbar==1.11
 
-coverage==4.5.3
+coverage==4.5.4
 flake8==3.7.8
 pytest==3.3.2
 pytest-django==3.5.1
