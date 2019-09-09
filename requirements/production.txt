@@ -13,4 +13,4 @@ psycopg2==2.8.3
 whitenoise==3.3.1
 
 # security
-sqreen==1.15.1
+sqreen==1.15.3
