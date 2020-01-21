@@ -1,7 +1,7 @@
 -r base.txt
 
 ipdb==0.12.2
-pdbpp==0.10.0
+pdbpp==0.10.2
 ipython==6.5.0
 
 django-coverage-plugin==1.6.0
