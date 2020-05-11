@@ -2,6 +2,6 @@ Django==1.11.23
 django-widget-tweaks==1.4.5
 django-tags-input==4.0.0
 dj-database-url==0.5.0
-Markdown==2.6.11
+Markdown==3.2.2
 python-decouple==3.1
 Werkzeug==0.15.5
