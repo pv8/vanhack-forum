@@ -10,7 +10,7 @@ django-anymail==6.1.0
 # postgres driver
 psycopg2==2.8.6
 
-whitenoise==3.3.1
+whitenoise==5.2.0
 
 # security
 sqreen==1.23.0
