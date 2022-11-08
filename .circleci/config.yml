@@ -1,0 +1,21 @@
+version: '2.1'
+orbs:
+  python: circleci/python@2.1.1
+jobs:
+  build:
+    executor: python/default
+    steps:
+      - checkout
+      - python/install-packages:
+          pip-dependency-file: requirements/development.txt
+          pkg-manager: pip
+      - run:
+          environment:
+            DATABASE_URL: sqlite:///db.sqlite3
+          command: |
+            pytest --cov-report term-missing --cov=.
+          name: Test
+workflows:
+  main:
+    jobs:
+      - build

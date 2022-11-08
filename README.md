@@ -1,5 +1,7 @@
 # VanHack Forum
 
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/pv8/vanhack-forum/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/pv8/vanhack-forum/tree/main)
+
 The **VanhackForum** app is a tech project for [VanHack](http://www.vanhack.com/) [Talent Accelerator](https://docs.google.com/presentation/d/1_ctXv9Zn9n0ywpzdpvz7oRvWc_pe-FfmgOAkELxqbUk/edit) program.
 
 Main app requisites for back-end developers:
