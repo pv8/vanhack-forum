@@ -14,3 +14,4 @@ whitenoise==3.3.1
 
 # security
 sqreen==1.23.0
+django>=3.2.15 # not directly required, pinned by Snyk to avoid a vulnerability
