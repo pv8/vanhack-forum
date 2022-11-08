@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/1.11/howto/deployment/wsgi/
 
 import os
 
-import sqreen
-sqreen.start()
+try:
+    import sqreen
+    sqreen.start()
+except:
+    None
 
 from django.core.wsgi import get_wsgi_application
 
