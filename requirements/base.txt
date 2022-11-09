@@ -1,4 +1,4 @@
-Django==1.11.29
+Django==3.1.14
 django-widget-tweaks==1.4.5
 django-tags-input==4.0.0
 dj-database-url==0.5.0
